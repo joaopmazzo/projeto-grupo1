@@ -12,14 +12,14 @@ export class AuthService {
   ) {}
 
   async singIn(dto: AuthDTO): Promise<any> {
-    const user = await this.usersService.findOne(dto.username);
-    const isPasswordMatch = await bcrypt.compare(dto.password, user?.password);
+    const user = await this.usersService.user({ email: dto.email });
+    const isPasswordMatch = await bcrypt.compare(dto.password, user?.senha);
 
     if (!user || !isPasswordMatch) {
       throw new UnauthorizedException('Credenciais inválidas');
     }
 
-    const payload = { sub: user.id, username: user.username };
+    const payload = { sub: user.id, email: user.email };
     return {
       access_token: await this.jwtService.signAsync(payload),
     };
