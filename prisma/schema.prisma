@@ -1,0 +1,30 @@
+datasource db {
+  provider = "postgresql" // ou "mysql", "sqlite", dependendo do seu banco
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  nome      String
+  email     String   @unique
+  senha     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  tasks     Task[]
+}
+
+model Task {
+  id        Int      @id @default(autoincrement())
+  titulo    String
+  descricao String?
+  concluida Boolean  @default(false)
+  usuarioId Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  usuario   User     @relation(fields: [usuarioId], references: [id])
+}
