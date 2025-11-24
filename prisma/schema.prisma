@@ -1,0 +1,19 @@
+const { PrismaClient } = require('@prisma/client'); // CommonJS
+const prisma = new PrismaClient();
+
+async function main() {
+  // Teste simples: listar todos os usuários com suas tarefas
+  const users = await prisma.user.findMany({
+    include: { tasks: true },
+  });
+
+  console.log("Usuários e tarefas:", users);
+
+  await prisma.$disconnect();
+}
+
+main().catch((e) => {
+  console.error(e);
+  prisma.$disconnect();
+});
+
