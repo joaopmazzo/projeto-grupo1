@@ -1,27 +1,29 @@
-
 datasource db {
   provider = "sqlite"
-  url      = "file:./dev.db"
 }
 
 generator client {
   provider = "prisma-client-js"
-  output   = "../generated/prisma"
 }
+
 model User {
-  id       Int     @id @default(autoincrement())
-  email    String  @unique
-  name     String?
-  posts    Post[]
+  id        Int      @id @default(autoincrement())
+  nome      String
+  email     String   @unique
+  senha     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  tasks     Task[]
 }
 
-model Post {
-  id        Int     @id @default(autoincrement())
-  title     String
-  content   String?
-  published Boolean  @default(false)
-  author    User?    @relation(fields: [authorId], references: [id])
-  authorId  Int?
+model Task {
+  id        Int      @id @default(autoincrement())
+  titulo    String
+  descricao String?
+  concluida Boolean  @default(false)
+  usuarioId Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  usuario User @relation(fields: [usuarioId], references: [id])
 }
-
-
