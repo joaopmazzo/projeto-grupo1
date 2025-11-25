@@ -1,6 +1,5 @@
 datasource db {
-  provider = "postgresql" // ou "mysql", "sqlite", dependendo do seu banco
-  url      = env("DATABASE_URL")
+  provider = "sqlite"
 }
 
 generator client {
@@ -26,5 +25,5 @@ model Task {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  usuario   User     @relation(fields: [usuarioId], references: [id])
+  usuario User @relation(fields: [usuarioId], references: [id])
 }
