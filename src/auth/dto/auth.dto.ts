@@ -5,7 +5,7 @@ export class AuthDTO {
   @IsNotEmpty({ message: 'Email não deve ser vazio' })
   email: string;
 
-  @IsString({ message: 'Password deve ser um texto' })
-  @IsNotEmpty({ message: 'Password não deve ser vazio' })
-  password: string;
+  @IsString({ message: 'Senha deve ser um texto' })
+  @IsNotEmpty({ message: 'Senha não deve ser vazio' })
+  senha: string;
 }
