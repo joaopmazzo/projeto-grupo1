@@ -13,7 +13,7 @@ export class AuthService {
 
   async singIn(dto: AuthDTO): Promise<any> {
     const user = await this.usersService.user({ email: dto.email });
-    const isPasswordMatch = await bcrypt.compare(dto.password, user?.senha);
+    const isPasswordMatch = dto.senha === user?.senha;
 
     if (!user || !isPasswordMatch) {
       throw new UnauthorizedException('Credenciais inválidas');
