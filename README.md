@@ -67,7 +67,7 @@ projeto-grupo1/
 - TypeScript
 - Prisma
 - JWT (JSON Web Tokens)
-- Banco a definir
+- SQLite
 - PNPM
 
 ## 🚀 Como Executar o Projeto
@@ -92,13 +92,17 @@ pnpm install
 #### 4. Execute as migrações do banco de dados:
 
 ```bash
+npx prisma generate
+```
+
+```bash
 npx prisma migrate dev
 ```
 
 #### 5. Inicie o servidor:
 
 ```bash
-pnpm run start:dev
+pnpm start:dev
 ```
 
 ## 👨‍💻 Autores
