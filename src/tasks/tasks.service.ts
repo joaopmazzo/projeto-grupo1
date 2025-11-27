@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { Task } from '@prisma/client';
+import { Task } from 'generated/prisma';
 import { PrismaService } from 'src/prisma.service';
-import { CreateTaskDTO,UpdateTaskDTO } from './dto/Tasks.dto';
+import { CreateTaskDTO, UpdateTaskDTO } from './dto/tasks.dto';
 
 @Injectable()
 export class TasksService {
@@ -45,11 +45,10 @@ export class TasksService {
     });
   }
 
-  async deleteTask(taskId: number, usuarioId: number): Promise<void> {
+  async deleteTask(taskId: number): Promise<void> {
     const task = await this.prisma.task.findFirst({
       where: {
         id: taskId,
-        usuarioId: usuarioId,
       },
     });
 
@@ -77,14 +76,7 @@ export class TasksService {
     return task;
   }
 
-  async getUserTasks(usuarioId: number): Promise<Task[]> {
-    return this.prisma.task.findMany({
-      where: {
-        usuarioId: usuarioId,
-      },
-      orderBy: {
-        createdAt: 'desc',
-      },
-    });
+  async getUserTasks(): Promise<Task[]> {
+    return this.prisma.task.findMany();
   }
 }
