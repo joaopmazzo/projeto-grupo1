@@ -9,12 +9,12 @@ import { Request } from 'express';
 import { jwtConstants } from 'src/common/constants/jwt.constants';
 
 @Injectable()
-export class AuthGuard implements CanActivate {
+export class AuthGuardSeguro implements CanActivate {
   constructor(private jwtService: JwtService) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const req = context.switchToHttp().getRequest();
-    const token = this.extractTokenFromHeader(req);
+    const token = extractTokenFromHeader(req);
     if (!token) {
       throw new UnauthorizedException();
     }
@@ -31,9 +31,24 @@ export class AuthGuard implements CanActivate {
 
     return true;
   }
+}
 
-  private extractTokenFromHeader(req: Request): string | undefined {
-    const [type, token] = req.headers.authorization?.split(' ') ?? [];
-    return type === 'Bearer' ? token : undefined;
+@Injectable()
+export class AuthGuardInseguro implements CanActivate {
+  constructor(private jwtService: JwtService) {}
+
+  async canActivate(context: ExecutionContext): Promise<boolean> {
+    const req = context.switchToHttp().getRequest();
+    const token = extractTokenFromHeader(req);
+    if (!token) {
+      throw new UnauthorizedException();
+    }
+
+    return true;
   }
+}
+
+function extractTokenFromHeader(req: Request): string | undefined {
+  const [type, token] = req.headers.authorization?.split(' ') ?? [];
+  return type === 'Bearer' ? token : undefined;
 }
