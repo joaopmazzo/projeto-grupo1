@@ -11,7 +11,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { AuthGuardInseguro, AuthGuardSeguro } from 'src/auth/guards/auth.guard';
-import { CreateTaskDTO, UpdateTaskDTO } from './dto/tasks.dto';
+import { CreateTaskDTO, UpdateTaskDTO } from './dto/Tasks.dto';
 import { TasksService } from './tasks.service';
 
 @Controller('tasks')
